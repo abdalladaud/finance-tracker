@@ -1,21 +1,14 @@
 import "dotenv/config";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Send verification email
 export const sendVerificationEmail = async (to, token) => {
-  // const verifyUrl = `${process.env.FRONTEND_URL}/verify-email/${token}`;
   const verifyUrl = `${process.env.BACKEND_URL}/api/auth/verify-email/${token}`;
 
-  await transporter.sendMail({
-    from: `"Finance Tracker" <${process.env.EMAIL_USER}>`,
+  await resend.emails.send({
+    from: process.env.EMAIL_FROM,
     to,
     subject: "Verify your Finance Tracker account",
     html: `
@@ -36,8 +29,8 @@ export const sendVerificationEmail = async (to, token) => {
 export const sendResetPasswordEmail = async (to, token) => {
   const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${token}`;
 
-  await transporter.sendMail({
-    from: `"Finance Tracker" <${process.env.EMAIL_USER}>`,
+  await resend.emails.send({
+    from: process.env.EMAIL_FROM,
     to,
     subject: "Reset your Finance Tracker password",
     html: `
