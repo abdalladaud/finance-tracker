@@ -7,7 +7,8 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export const sendVerificationEmail = async (to, token) => {
   const verifyUrl = `${process.env.BACKEND_URL}/api/auth/verify-email/${token}`;
 
-  await resend.emails.send({
+  try {
+  const { data, error } = await resend.emails.send({
     from: process.env.EMAIL_FROM,
     to,
     subject: "Verify your Finance Tracker account",
@@ -23,6 +24,17 @@ export const sendVerificationEmail = async (to, token) => {
       <p>This link will expire in 24 hours.</p>
     `,
   });
+
+  if (error) {
+    console.error("Resend email error:", error);
+    throw new Error(error.message);
+  }
+
+  console.log("Verification email sent successfully:", data);
+} catch (error) {
+  console.error("Failed to send verification email:", error);
+  throw error;
+}
 };
 
 // Send password reset email
