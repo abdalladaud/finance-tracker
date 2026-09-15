@@ -7,8 +7,6 @@ A backend REST API for managing personal finances, including authentication, tra
 - User registration and login
 - JWT authentication
 - Password hashing with bcryptjs
-- Email verification
-- Forgot and reset password
 - User profile management
 - Profile image upload with Cloudinary
 - Transaction CRUD
@@ -38,7 +36,6 @@ A backend REST API for managing personal finances, including authentication, tra
 - Zod
 - Multer
 - Cloudinary
-- Nodemailer
 - Swagger UI
 
 ## API Documentation
@@ -46,7 +43,13 @@ A backend REST API for managing personal finances, including authentication, tra
 Swagger documentation is available at:
 
 ```text
-/api-docs
+https://finance-tracker-api-pdy4.onrender.com/docs
+```
+
+For local development:
+
+```text
+http://localhost:3000/docs
 ```
 
 ## Main API Endpoints
@@ -75,7 +78,7 @@ Swagger documentation is available at:
 
 | Method | Endpoint | Description |
 |---|---|---|
-| GET | `/api/categories` | Get predefined categories |
+| GET | `/api/categories` | Get predefined transaction categories |
 
 ### File Upload
 
@@ -116,7 +119,7 @@ Admin-only endpoints require the `admin` role.
 Clone the repository:
 
 ```bash
-git clone <your-github-repository-url>
+git clone <https://github.com/abdalladaud/finance-tracker-api>
 ```
 
 Navigate into the project:
@@ -200,6 +203,8 @@ Main models include:
 
 Profile images are uploaded using Multer and stored through Cloudinary.
 
+Upload endpoint:
+
 ```text
 POST /api/upload/profile
 ```
@@ -227,18 +232,28 @@ GET /api/admin/overview
 
 ## Deployment
 
-The API is prepared for deployment as a Node.js web service.
+The API is deployed as a Node.js web service on Render.
 
-Production environment variables should be configured through the deployment platform and sensitive secrets should not be committed to GitHub.
+Production environment variables are configured through the deployment platform. Sensitive secrets are not committed to GitHub.
+
+Live API:
+
+```text
+https://finance-tracker-api-pdy4.onrender.com
+```
+
+Swagger documentation:
+
+```text
+https://finance-tracker-api-pdy4.onrender.com/docs
+```
 
 ## Project Status
 
-The Finance Tracker API includes:
+The Finance Tracker API currently includes:
 
-- Authentication
+- User authentication
 - User profiles
-- Email verification
-- Password recovery
 - Transactions
 - Monthly summaries
 - Categories
@@ -246,6 +261,7 @@ The Finance Tracker API includes:
 - Admin management
 - Security middleware
 - Swagger documentation
+- Render deployment
 
 ## Author
 
