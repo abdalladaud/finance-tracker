@@ -1,5 +1,5 @@
 import express from "express";
-import { register, login, updateProfile, verifyEmail, forgotPassword, resetPassword } from "../controllers/auth.js";
+import { register, login, updateProfile } from "../controllers/auth.js";
 import validateZod from "../middlewares/validateZod.js";
 import { createUserSchema, updateUserSchema  } from "../schemas/userSchema.js";
 import protect from "../middlewares/auth.js";
@@ -127,90 +127,5 @@ router.patch(
   updateProfile
 );
 
-// Verify email route
-/**
- * @swagger
- * /api/auth/verify-email/{token}:
- *   get:
- *     tags:
- *       - Auth
- *     summary: Verify user email
- *     parameters:
- *       - in: path
- *         name: token
- *         required: true
- *         schema:
- *           type: string
- *         description: Email verification token
- *     responses:
- *       200:
- *         description: Email verified successfully
- *       400:
- *         description: Invalid or expired verification token
- */
-router.get("/verify-email/:token", verifyEmail);
-
-/**
- * @swagger
- * /api/auth/forgot-password:
- *   post:
- *     tags:
- *       - Auth
- *     summary: Request a password reset
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - email
- *             properties:
- *               email:
- *                 type: string
- *                 format: email
- *                 example: user@example.com
- *     responses:
- *       200:
- *         description: Password reset token created successfully
- *       404:
- *         description: User not found
- */
-router.post("/forgot-password", forgotPassword);
-
-/**
- * @swagger
- * /api/auth/reset-password/{token}:
- *   post:
- *     tags:
- *       - Auth
- *     summary: Reset user password
- *     parameters:
- *       - in: path
- *         name: token
- *         required: true
- *         schema:
- *           type: string
- *         description: Password reset token
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required:
- *               - password
- *             properties:
- *               password:
- *                 type: string
- *                 minLength: 6
- *                 example: newPassword123
- *     responses:
- *       200:
- *         description: Password reset successfully
- *       400:
- *         description: Invalid or expired reset token
- */
-router.post("/reset-password/:token", resetPassword);
 
 export default router;
