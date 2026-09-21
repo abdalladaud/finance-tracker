@@ -256,7 +256,7 @@ https://finance-tracker-api-pdy4.onrender.com/docs
 ### 1. Clone the repository
 
 ```bash
-git clone <your-github-repository-url>
+git clone <[your-github-repository-url](https://github.com/abdalladaud/finance-tracker)>
 cd finance-tracker
 ```
 
