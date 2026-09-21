@@ -52,8 +52,6 @@ export const getAdminOverview = async (req, res, next) => {
   }
 };
 
-
-
 //get all transactions
 export const getAllTransactions = async (req, res, next) => {
   try {
@@ -97,10 +95,16 @@ export const getUser = async (req, res, next) => {
 // Update a user by ID
 export const updateUser = async (req, res, next) => {
   try {
+    const { name, email, role } = req.body;
+
     const user = await User.findByIdAndUpdate(
       req.params.id,
-      req.body,
-      { new: true }
+      {
+        name,
+        email,
+        role,
+      },
+      { new: true, runValidators: true }
     ).select("-password");
 
     if (!user) {
@@ -111,6 +115,12 @@ export const updateUser = async (req, res, next) => {
 
     res.json(user);
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(409).json({
+        message: "Email already in use",
+      });
+    }
+
     next(error);
   }
 };
