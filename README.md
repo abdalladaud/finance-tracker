@@ -38,9 +38,15 @@ The project contains both the frontend and backend in a single repository.
 
 ### User Dashboard
 
-| Dashboard | Transactions |
+### User Dashboard
+
+| Light Mode | Dark Mode |
 | --- | --- |
-| ![Dashboard](docs/screenshots/dashboard.png) | ![Transactions](docs/screenshots/transactions.png) |
+| ![Dashboard Light](docs/screenshots/dashboard.png) | ![Dashboard Dark](docs/screenshots/dashboard-dark.png) |
+
+### Transactions
+
+![Transactions](docs/screenshots/transactions.png)
 
 ### Categories & Profile
 
@@ -56,7 +62,7 @@ The project contains both the frontend and backend in a single repository.
 
 ### Admin Transactions
 
-![Admin Transactions](docs/screenshots/adminTransactions.png)
+![Admin Transactions](docs/screenshots/adminTransactions.png) 
 
 ## Tech Stack
 
