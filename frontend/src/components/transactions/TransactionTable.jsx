@@ -66,30 +66,30 @@ function TransactionTable({
 
   return (
     <div className="w-full overflow-x-auto rounded-lg border bg-card">
-      <Table className="min-w-\[540px\] w-full table-fixed">
+      <Table className="w-full min-w-[560px]">
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[26%] px-2 py-2 text-xs sm:px-3 sm:text-sm">
+            <TableHead className="w-[22%] px-3 py-2 text-xs sm:text-sm">
               Title
             </TableHead>
 
-            <TableHead className="w-[17%] px-2 py-2 text-xs sm:px-3 sm:text-sm">
+            <TableHead className="w-[16%] px-3 py-2 text-xs sm:text-sm">
               Type
             </TableHead>
 
-            <TableHead className="hidden w-[17%] px-2 py-2 text-xs sm:px-3 sm:text-sm xl:table-cell">
+            <TableHead className="hidden w-[18%] px-3 py-2 text-xs sm:table-cell sm:text-sm">
               Category
             </TableHead>
 
-            <TableHead className="w-[19%] px-2 py-2 text-xs sm:px-3 sm:text-sm">
+            <TableHead className="w-[15%] px-3 py-2 text-xs sm:text-sm">
               Date
             </TableHead>
 
-            <TableHead className="w-[19%] px-2 py-2 text-right text-xs sm:px-3 sm:text-sm">
+            <TableHead className="w-[17%] px-3 py-2 text-right text-xs sm:text-sm">
               Amount
             </TableHead>
 
-            <TableHead className="w-\[70px\] px-1 py-2 text-right text-xs sm:px-2 sm:text-sm">
+            <TableHead className="w-[12%] px-3 py-2 text-right text-xs sm:text-sm">
               Actions
             </TableHead>
           </TableRow>
@@ -98,11 +98,13 @@ function TransactionTable({
         <TableBody>
           {transactions.map((transaction) => (
             <TableRow key={transaction._id}>
-              <TableCell className="truncate px-2 py-2 text-xs font-medium sm:px-3 sm:text-sm">
-                {transaction.title}
+              <TableCell className="px-3 py-2 text-xs font-medium sm:text-sm">
+                <div className="max-w-[160px] truncate">
+                  {transaction.title}
+                </div>
               </TableCell>
 
-              <TableCell className="px-2 py-2 text-xs sm:px-3 sm:text-sm">
+              <TableCell className="px-3 py-2 text-xs sm:text-sm">
                 <span
                   className={
                     transaction.type === "income"
@@ -110,20 +112,24 @@ function TransactionTable({
                       : "text-red-600/55"
                   }
                 >
-                  {transaction.type === "income" ? "Income" : "Expense"}
+                  {transaction.type === "income"
+                    ? "Income"
+                    : "Expense"}
                 </span>
               </TableCell>
 
-              <TableCell className="hidden truncate px-2 py-2 text-xs sm:px-3 sm:text-sm xl:table-cell">
-                {transaction.category}
+              <TableCell className="hidden px-3 py-2 text-xs sm:table-cell sm:text-sm">
+                <div className="max-w-[160px] truncate">
+                  {transaction.category}
+                </div>
               </TableCell>
 
-              <TableCell className="whitespace-nowrap px-2 py-2 text-xs text-muted-foreground sm:px-3 sm:text-sm">
+              <TableCell className="whitespace-nowrap px-3 py-2 text-xs text-muted-foreground sm:text-sm">
                 {formatDate(transaction.date)}
               </TableCell>
 
               <TableCell
-                className={`truncate px-2 py-2 text-right text-xs font-medium sm:px-3 sm:text-sm ${
+                className={`whitespace-nowrap px-3 py-2 text-right text-xs font-medium sm:text-sm ${
                   transaction.type === "income"
                     ? "text-emerald-600/75"
                     : "text-red-600/55"
@@ -133,8 +139,8 @@ function TransactionTable({
                 {formatAmount(transaction.amount)}
               </TableCell>
 
-              <TableCell className="px-1 py-2 sm:px-2">
-                <div className="flex justify-end gap-0.5">
+              <TableCell className="px-3 py-2">
+                <div className="flex items-center justify-end gap-1">
                   <Button
                     type="button"
                     variant="ghost"
@@ -146,6 +152,7 @@ function TransactionTable({
                       className="size-3.5 sm:size-4"
                       strokeWidth={1.8}
                     />
+
                     <span className="sr-only">
                       Edit transaction
                     </span>
@@ -162,6 +169,7 @@ function TransactionTable({
                       className="size-3.5 sm:size-4"
                       strokeWidth={1.8}
                     />
+
                     <span className="sr-only">
                       Delete transaction
                     </span>

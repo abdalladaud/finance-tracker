@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -15,8 +16,39 @@ function TransactionForm({
   isLoading = false,
   isEditing = false,
 }) {
+  const [titleError, setTitleError] = useState("");
+
+  const isValidTitle = (value) => {
+    const title = value.trim();
+
+    return title.length >= 2 && /\p{L}/u.test(title);
+  };
+
+  const handleTitleChange = (event) => {
+    const value = event.target.value;
+
+    onChange(event);
+
+    if (titleError && isValidTitle(value)) {
+      setTitleError("");
+    }
+  };
+
+  const handleSubmit = (event) => {
+    const title = formValues.title?.trim() || "";
+
+    if (!isValidTitle(title)) {
+      event.preventDefault();
+      setTitleError("Title must contain at least 2 characters and one letter.");
+      return;
+    }
+
+    setTitleError("");
+    onSubmit(event);
+  };
+
   return (
-    <form onSubmit={onSubmit} className="space-y-5">
+    <form onSubmit={handleSubmit} className="space-y-5">
       <div className="space-y-2">
         <Label htmlFor="title">Title</Label>
 
@@ -24,10 +56,18 @@ function TransactionForm({
           id="title"
           name="title"
           value={formValues.title}
-          onChange={onChange}
+          onChange={handleTitleChange}
           placeholder="e.g. Salary"
           required
+          aria-invalid={Boolean(titleError)}
+          className={titleError ? "border-destructive focus-visible:ring-destructive" : ""}
         />
+
+        {titleError && (
+          <p className="text-sm text-destructive">
+            {titleError}
+          </p>
+        )}
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -67,7 +107,6 @@ function TransactionForm({
 
             <SelectContent>
               <SelectItem value="expense">Expense</SelectItem>
-
               <SelectItem value="income">Income</SelectItem>
             </SelectContent>
           </Select>
