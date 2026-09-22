@@ -79,7 +79,7 @@ function Sidebar({ mobileMenuOpen, onClose }) {
       <aside
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
-        className={`fixed inset-y-0 left-0 z-40 flex h-screen w-64 flex-col border-r bg-sidebar transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 left-0 z-40 flex h-\[100dvh\] w-64 flex-col overflow-hidden border-r bg-sidebar transition-transform duration-300 ease-in-out ${
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0`}
       >
@@ -100,7 +100,7 @@ function Sidebar({ mobileMenuOpen, onClose }) {
         </div>
 
         {/* Navigation */}
-        <nav className="min-h-0 flex-1 overflow-y-auto px-3 py-6">
+        <nav className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-3 py-6">
           <div className="space-y-1">
             {navigation.map((item) => {
               const Icon = item.icon;
