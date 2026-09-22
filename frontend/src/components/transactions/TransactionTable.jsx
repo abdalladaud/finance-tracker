@@ -56,112 +56,124 @@ function TransactionTable({
     return (
       <div className="rounded-lg border bg-card">
         <div className="flex min-h-40 items-center justify-center">
-          <p className="text-sm text-muted-foreground">No transactions yet.</p>
+          <p className="text-sm text-muted-foreground">
+            No transactions yet.
+          </p>
         </div>
       </div>
     );
   }
 
- return (
-  <div className="w-full overflow-x-auto rounded-lg border bg-card">
-    <Table className="min-w-[620px] w-full">
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-[28%] px-3 py-2 text-sm">
-            Title
-          </TableHead>
+  return (
+    <div className="w-full overflow-x-auto rounded-lg border bg-card">
+      <Table className="min-w-\[540px\] w-full table-fixed">
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-[26%] px-2 py-2 text-xs sm:px-3 sm:text-sm">
+              Title
+            </TableHead>
 
-          <TableHead className="w-[17%] px-3 py-2 text-sm">
-            Type
-          </TableHead>
+            <TableHead className="w-[17%] px-2 py-2 text-xs sm:px-3 sm:text-sm">
+              Type
+            </TableHead>
 
-          <TableHead className="hidden w-[18%] px-3 py-2 text-sm xl:table-cell">
-            Category
-          </TableHead>
+            <TableHead className="hidden w-[17%] px-2 py-2 text-xs sm:px-3 sm:text-sm xl:table-cell">
+              Category
+            </TableHead>
 
-          <TableHead className="w-[20%] px-3 py-2 text-sm">
-            Date
-          </TableHead>
+            <TableHead className="w-[19%] px-2 py-2 text-xs sm:px-3 sm:text-sm">
+              Date
+            </TableHead>
 
-          <TableHead className="w-[20%] px-3 py-2 text-right text-sm">
-            Amount
-          </TableHead>
+            <TableHead className="w-[19%] px-2 py-2 text-right text-xs sm:px-3 sm:text-sm">
+              Amount
+            </TableHead>
 
-          <TableHead className="w-[80px] px-3 py-2 text-right text-sm">
-            Actions
-          </TableHead>
-        </TableRow>
-      </TableHeader>
+            <TableHead className="w-\[70px\] px-1 py-2 text-right text-xs sm:px-2 sm:text-sm">
+              Actions
+            </TableHead>
+          </TableRow>
+        </TableHeader>
 
-      <TableBody>
-        {transactions.map((transaction) => (
-          <TableRow key={transaction._id}>
-            <TableCell className="truncate px-3 py-2 text-sm font-medium">
-              {transaction.title}
-            </TableCell>
+        <TableBody>
+          {transactions.map((transaction) => (
+            <TableRow key={transaction._id}>
+              <TableCell className="truncate px-2 py-2 text-xs font-medium sm:px-3 sm:text-sm">
+                {transaction.title}
+              </TableCell>
 
-            <TableCell className="px-3 py-2 text-sm">
-              <span
-                className={
+              <TableCell className="px-2 py-2 text-xs sm:px-3 sm:text-sm">
+                <span
+                  className={
+                    transaction.type === "income"
+                      ? "text-emerald-600/75"
+                      : "text-red-600/55"
+                  }
+                >
+                  {transaction.type === "income" ? "Income" : "Expense"}
+                </span>
+              </TableCell>
+
+              <TableCell className="hidden truncate px-2 py-2 text-xs sm:px-3 sm:text-sm xl:table-cell">
+                {transaction.category}
+              </TableCell>
+
+              <TableCell className="whitespace-nowrap px-2 py-2 text-xs text-muted-foreground sm:px-3 sm:text-sm">
+                {formatDate(transaction.date)}
+              </TableCell>
+
+              <TableCell
+                className={`truncate px-2 py-2 text-right text-xs font-medium sm:px-3 sm:text-sm ${
                   transaction.type === "income"
                     ? "text-emerald-600/75"
                     : "text-red-600/55"
-                }
+                }`}
               >
-                {transaction.type === "income" ? "Income" : "Expense"}
-              </span>
-            </TableCell>
+                {transaction.type === "income" ? "+" : "-"}
+                {formatAmount(transaction.amount)}
+              </TableCell>
 
-            <TableCell className="hidden truncate px-3 py-2 text-sm xl:table-cell">
-              {transaction.category}
-            </TableCell>
+              <TableCell className="px-1 py-2 sm:px-2">
+                <div className="flex justify-end gap-0.5">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => onEdit(transaction)}
+                    className="size-7 sm:size-8"
+                  >
+                    <Pencil
+                      className="size-3.5 sm:size-4"
+                      strokeWidth={1.8}
+                    />
+                    <span className="sr-only">
+                      Edit transaction
+                    </span>
+                  </Button>
 
-            <TableCell className="whitespace-nowrap px-3 py-2 text-sm text-muted-foreground">
-              {formatDate(transaction.date)}
-            </TableCell>
-
-            <TableCell
-              className={`truncate px-3 py-2 text-right text-sm font-medium ${
-                transaction.type === "income"
-                  ? "text-emerald-600/75"
-                  : "text-red-600/55"
-              }`}
-            >
-              {transaction.type === "income" ? "+" : "-"}
-              {formatAmount(transaction.amount)}
-            </TableCell>
-
-            <TableCell className="px-2 py-2">
-              <div className="flex justify-end gap-1">
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onEdit(transaction)}
-                  className="size-8"
-                >
-                  <Pencil className="size-4" strokeWidth={1.8} />
-                  <span className="sr-only">Edit transaction</span>
-                </Button>
-
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => onDelete(transaction)}
-                  className="size-8 text-muted-foreground hover:text-destructive"
-                >
-                  <Trash2 className="size-4" strokeWidth={1.8} />
-                  <span className="sr-only">Delete transaction</span>
-                </Button>
-              </div>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </Table>
-  </div>
-);
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => onDelete(transaction)}
+                    className="size-7 text-muted-foreground hover:text-destructive sm:size-8"
+                  >
+                    <Trash2
+                      className="size-3.5 sm:size-4"
+                      strokeWidth={1.8}
+                    />
+                    <span className="sr-only">
+                      Delete transaction
+                    </span>
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  );
 }
 
 export default TransactionTable;
