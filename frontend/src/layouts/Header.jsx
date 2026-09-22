@@ -10,6 +10,10 @@ const pageTitles = {
   "/transactions": "Transactions",
   "/categories": "Categories",
   "/profile": "Profile",
+
+  "/admin": "Overview",
+  "/admin/users": "Users",
+  "/admin/transactions": "Transactions",
 };
 
 function Header({ onMenuClick, mobileMenuOpen }) {
@@ -33,7 +37,15 @@ function Header({ onMenuClick, mobileMenuOpen }) {
           )}
         </button>
 
-        <h1 className="text-sm font-medium text-foreground">{title}</h1>
+        {/* Mobile */}
+        <h1 className="text-sm font-medium text-foreground md:hidden">
+          Finance Tracker
+        </h1>
+
+        {/* Desktop */}
+        <h1 className="hidden text-sm font-medium text-foreground md:block">
+          {title}
+        </h1>
       </div>
 
       <div className="flex items-center gap-2">

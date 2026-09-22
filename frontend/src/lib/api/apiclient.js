@@ -1,14 +1,10 @@
 import axios from "axios"
 import useAuthStore from "../store/authStore"
 
-const API_URL =
-  import.meta.env.VITE_API_URL || "/api"
+const API_URL = import.meta.env.VITE_API_URL || "/api"
 
 const api = axios.create({
   baseURL: API_URL,
-  headers: {
-    "Content-Type": "application/json",
-  },
 })
 
 api.interceptors.request.use((config) => {
@@ -16,6 +12,12 @@ api.interceptors.request.use((config) => {
 
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
+  }
+
+  if (!(config.data instanceof FormData)) {
+    config.headers["Content-Type"] = "application/json"
+  } else {
+    delete config.headers["Content-Type"]
   }
 
   return config

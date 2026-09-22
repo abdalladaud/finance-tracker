@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import {
   LayoutDashboard,
   ArrowLeftRight,
@@ -37,6 +38,32 @@ const navigation = [
 function Sidebar({ mobileMenuOpen, onClose }) {
   const user = useAuthStore((state) => state.user);
   const isAdmin = user?.role === "admin";
+
+  const touchStart = useRef({ x: 0, y: 0 });
+
+  const handleTouchStart = (event) => {
+    const touch = event.touches[0];
+
+    touchStart.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+    };
+  };
+
+  const handleTouchEnd = (event) => {
+    const touch = event.changedTouches[0];
+
+    const deltaX = touch.clientX - touchStart.current.x;
+    const deltaY = touch.clientY - touchStart.current.y;
+
+    const isHorizontalSwipe = Math.abs(deltaX) > Math.abs(deltaY);
+    const swipeDistance = Math.abs(deltaX);
+
+    if (isHorizontalSwipe && deltaX < 0 && swipeDistance > 60) {
+      onClose();
+    }
+  };
+
   return (
     <>
       {/* Mobile overlay */}
@@ -50,12 +77,14 @@ function Sidebar({ mobileMenuOpen, onClose }) {
       />
 
       <aside
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         className={`fixed inset-y-0 left-0 z-40 flex h-screen w-64 flex-col border-r bg-sidebar transition-transform duration-300 ease-in-out ${
           mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         } md:translate-x-0`}
       >
         {/* Brand */}
-        <div className="flex h-16 items-center justify-between border-b px-6">
+        <div className="flex h-16 shrink-0 items-center justify-between border-b px-6">
           <span className="text-lg font-semibold tracking-tight">
             Finance Tracker
           </span>
@@ -71,7 +100,7 @@ function Sidebar({ mobileMenuOpen, onClose }) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-6">
+        <nav className="min-h-0 flex-1 overflow-y-auto px-3 py-6">
           <div className="space-y-1">
             {navigation.map((item) => {
               const Icon = item.icon;
@@ -90,7 +119,6 @@ function Sidebar({ mobileMenuOpen, onClose }) {
                   }
                 >
                   <Icon className="size-4" strokeWidth={1.8} />
-
                   <span>{item.name}</span>
                 </NavLink>
               );
@@ -98,7 +126,6 @@ function Sidebar({ mobileMenuOpen, onClose }) {
           </div>
 
           {/* Admin Section */}
-
           {isAdmin && (
             <div className="mt-8">
               <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
@@ -157,7 +184,7 @@ function Sidebar({ mobileMenuOpen, onClose }) {
         </nav>
 
         {/* Logout */}
-        <div className="flex h-14 items-center border-t px-3">
+        <div className="flex h-14 shrink-0 items-center border-t px-3">
           <LogoutButton onClose={onClose} />
         </div>
       </aside>
