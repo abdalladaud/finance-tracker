@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useMutation } from "@tanstack/react-query"
+import { Eye, EyeOff } from "lucide-react";
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -17,6 +18,8 @@ function RegisterForm() {
     email: "",
     password: "",
   })
+
+   const [showPassword, setShowPassword] = useState(false);
 
   const [clientErrors, setClientErrors] = useState({})
 
@@ -171,10 +174,11 @@ function RegisterForm() {
       <div className="space-y-1.5">
         <Label htmlFor="password">Password</Label>
 
-        <Input
+        <div className="relative">
+          <Input
           id="password"
           name="password"
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="••••••••"
           value={formValues.password}
           onChange={handleInputChange}
@@ -184,6 +188,21 @@ function RegisterForm() {
               : ""
           }`}
         />
+
+        <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground transition-colors hover:text-foreground"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? (
+              <EyeOff className="size-4" />
+            ) : (
+              <Eye className="size-4" />
+            )}
+          </button>
+
+          </div>
 
         {fieldErrors.password && (
           <p className="text-xs font-normal leading-4 text-destructive/80">
