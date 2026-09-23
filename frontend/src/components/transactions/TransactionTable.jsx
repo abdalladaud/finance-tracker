@@ -66,7 +66,7 @@ function TransactionTable({
 
   return (
     <div className="w-full overflow-x-auto rounded-lg border bg-card">
-      <Table className="w-full min-w-[560px]">
+      <Table className="w-full min-w-\[560px\]">
         <TableHeader>
           <TableRow>
             <TableHead className="w-[22%] px-3 py-2 text-xs sm:text-sm">
@@ -99,7 +99,7 @@ function TransactionTable({
           {transactions.map((transaction) => (
             <TableRow key={transaction._id}>
               <TableCell className="px-3 py-2 text-xs font-medium sm:text-sm">
-                <div className="max-w-[160px] truncate">
+                <div className="max-w-\[160px\] truncate">
                   {transaction.title}
                 </div>
               </TableCell>
@@ -119,7 +119,7 @@ function TransactionTable({
               </TableCell>
 
               <TableCell className="hidden px-3 py-2 text-xs sm:table-cell sm:text-sm">
-                <div className="max-w-[160px] truncate">
+                <div className="max-w-\[160px\] truncate">
                   {transaction.category}
                 </div>
               </TableCell>
